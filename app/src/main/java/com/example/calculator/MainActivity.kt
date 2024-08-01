@@ -20,8 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CalculatorTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    CalculatorApp(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -31,17 +30,13 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun CalculatorApp(modifier:Modifier = Modifier) {
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun CalculatorAppPreview() {
     CalculatorTheme {
-        Greeting("Android")
+        CalculatorApp()
     }
 }
