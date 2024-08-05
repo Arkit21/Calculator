@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,12 +27,12 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Cyan
 import androidx.compose.ui.graphics.Color.Companion.Magenta
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -99,10 +100,30 @@ fun CalculatorApp(modifier: Modifier = Modifier) {
             }
             Spacer(Modifier.height(64.dp))
             Column {
-                ButtonRow("7", "8", "9", "+")
-                ButtonRow("4", "5", "6", "-")
-                ButtonRow("1", "2", "3", "*")
-                ButtonRow("0", ".", "C", "/")
+                ButtonRow(
+                    R.string.seventh_button,
+                    R.string.eight_button,
+                    R.string.ninth_button,
+                    R.string.addition_button
+                )
+                ButtonRow(
+                    R.string.fourth_button,
+                    R.string.fifth_button,
+                    R.string.sixth_button,
+                    R.string.subtraction_button
+                )
+                ButtonRow(
+                    R.string.first_button,
+                    R.string.second_button,
+                    R.string.third_button,
+                    R.string.multiplication_button
+                )
+                ButtonRow(
+                    R.string.zeroth_button,
+                    R.string.period_button,
+                    R.string.clear_button,
+                    R.string.division_button
+                )
             }
         }
     }
@@ -110,45 +131,39 @@ fun CalculatorApp(modifier: Modifier = Modifier) {
 
 @Composable
 fun ButtonRow(
-              value1: String,
-              value2: String,
-              value3: String,
-              value4: String
+    @StringRes value1: Int,
+    @StringRes value2: Int,
+    @StringRes value3: Int,
+    @StringRes value4: Int
 ) {
-    Row(horizontalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxWidth()) {
-        Button(onClick = { /*TODO*/ },
-            shape = RoundedCornerShape(48.dp),
-            modifier = Modifier.padding(6.dp)
-                .size(86.dp)) {
-            Text(text = value1,
-                fontSize = 60.sp)
-        }
-        Button(onClick = { /*TODO*/ },
-            shape = RoundedCornerShape(48.dp),
-            modifier = Modifier.padding(6.dp)
-                .size(86.dp)) {
-            Text(text = value2,
-                fontSize = 60.sp,
-                textAlign = TextAlign.Center
-                )
-        }
-        Button(onClick = { /*TODO*/ },
-            shape = RoundedCornerShape(48.dp),
-            modifier = Modifier.padding(6.dp)
-                .size(86.dp)) {
-            Text(text = value3,
-                fontSize = 60.sp)
-        }
-        Button(onClick = { /*TODO*/ },
-            shape = RoundedCornerShape(48.dp),
-            modifier = Modifier.padding(6.dp)
-                .size(86.dp)) {
-            Text(text = value4,
-                fontSize = 60.sp)
-        }
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        AppButton(text = value1)
+        AppButton(text = value2)
+        AppButton(text = value3)
+        AppButton(text = value4)
     }
 
+}
+
+@Composable
+fun AppButton(
+    @StringRes text: Int // Avoided modifier as it would have to be passed repeatedly as an argument during each function invocation
+) {
+    Button(
+        onClick = { /*TODO*/ },
+        shape = RoundedCornerShape(48.dp),
+        modifier = Modifier
+            .padding(6.dp)
+            .size(86.dp)
+    ) {
+        Text(
+            text = stringResource(id = text),
+            fontSize = 60.sp
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
