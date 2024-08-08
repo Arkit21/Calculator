@@ -17,4 +17,6 @@
     <string name="division_button">/</string>
     <string name="decimal_button">/</string>
     <string name="period_button">.</string>
+    <string name="app_description">A dummy Project by Arkitx11</string>
+    <string name="text_field_value">Let\'s Calculate</string>
 </resources>

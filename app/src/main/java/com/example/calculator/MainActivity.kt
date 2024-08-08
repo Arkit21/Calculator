@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -32,11 +31,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Cyan
 import androidx.compose.ui.graphics.Color.Companion.Magenta
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.calculator.ui.theme.CalculatorTheme
 import com.example.calculator.ui.theme.Purple40
@@ -67,23 +66,23 @@ class MainActivity : ComponentActivity() {
 fun CalculatorApp(modifier: Modifier = Modifier) {
     Surface(
         modifier = Modifier
-            .padding(16.dp)
+            .padding(dimensionResource(id = R.dimen.padding_medium))
             .fillMaxSize()
     ) {
         Column(verticalArrangement = Arrangement.Top) {
-            Spacer(Modifier.height(32.dp))
+            Spacer(Modifier.height(dimensionResource(id = R.dimen.spacer_height_small)))
             Surface(
-                modifier = modifier.padding(16.dp)
+                modifier = modifier.padding(dimensionResource(id = R.dimen.padding_medium))
             ) {
                 val gradientColors = listOf(Cyan, Magenta, Purple40 /*...*/)
                 TextField(
-                    value = "Let's Calculate", onValueChange = {},
+                    shape = MaterialTheme.shapes.extraLarge,
+                    value = stringResource(R.string.text_field_value), onValueChange = {},
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(82.dp),
+                        .height(dimensionResource(id = R.dimen.text_field_height)),
                     readOnly = true,
                     singleLine = true,
-                    shape = RoundedCornerShape(20.dp),
                     colors = TextFieldDefaults.colors(
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
@@ -98,7 +97,7 @@ fun CalculatorApp(modifier: Modifier = Modifier) {
                     )
                 )
             }
-            Spacer(Modifier.height(64.dp))
+            Spacer(Modifier.height(dimensionResource(id = R.dimen.spacer_height_medium)))
             Column {
                 ButtonRow(
                     R.string.seventh_button,
@@ -154,10 +153,9 @@ fun AppButton(
 ) {
     Button(
         onClick = { /*TODO*/ },
-        shape = RoundedCornerShape(48.dp),
         modifier = Modifier
-            .padding(6.dp)
-            .size(86.dp)
+            .padding(dimensionResource(id = R.dimen.padding_small))
+            .size(dimensionResource(id = R.dimen.button_size))
     ) {
         Text(
             text = stringResource(id = text),
@@ -170,7 +168,7 @@ fun AppButton(
 @Composable
 fun CalculatorAppTopBar(modifier: Modifier = Modifier) {
     CenterAlignedTopAppBar(
-        title = { Text(text = "My Calculator App") },
+        title = { Text(text = stringResource(id = R.string.app_name)) },
         colors = topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             titleContentColor = MaterialTheme.colorScheme.primary,
@@ -182,7 +180,7 @@ fun CalculatorAppTopBar(modifier: Modifier = Modifier) {
 fun CalculatorAppBottomBar(modifier: Modifier = Modifier) {
     BottomAppBar {
         Text(
-            text = "A dummy Project by Arkitx11",
+            text = stringResource(R.string.app_description),
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_size">86dp</dimen>
+    <dimen name="text_field_height">82dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_small">6dp</dimen>
+    <dimen name="spacer_height_medium">64dp</dimen>
+    <dimen name="spacer_height_small">32dp</dimen>
+</resources>
