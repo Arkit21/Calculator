@@ -10,11 +10,15 @@
     <string name="eight_button">8</string>
     <string name="ninth_button">9</string>
     <string name="zeroth_button">0</string>
-    <string name="clear_button">=</string>
+    <string name="equals_button">=</string>
     <string name="addition_button">+</string>
     <string name="subtraction_button">-</string>
     <string name="multiplication_button">*</string>
     <string name="division_button">/</string>
+    <string name="clear_button">C</string>
+    <string name="opening_bracket_button">(</string>
+    <string name="closing_bracket_button">)</string>
+    <string name="modulus_button">%</string>
     <string name="decimal_button">/</string>
     <string name="period_button">.</string>
     <string name="app_description">A dummy Project by Arkitx11</string>

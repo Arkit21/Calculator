@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -46,13 +45,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CalculatorTheme {
-                Scaffold(modifier = Modifier.fillMaxSize(),
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
                     topBar = {
                         CalculatorAppTopBar()
                     },
-                    bottomBar = {
-                        CalculatorAppBottomBar()
-                    }) { innerPadding ->
+                ) { innerPadding ->
                     CalculatorApp(
                         modifier = Modifier.padding(innerPadding)
                     )
@@ -97,33 +95,40 @@ fun CalculatorApp(modifier: Modifier = Modifier) {
                     )
                 )
             }
-            Spacer(Modifier.height(dimensionResource(id = R.dimen.spacer_height_medium)))
+            Spacer(modifier = Modifier.weight(3f))
             Column {
+                ButtonRow(
+                    R.string.addition_button,
+                    R.string.subtraction_button,
+                    R.string.multiplication_button,
+                    R.string.division_button
+                )
                 ButtonRow(
                     R.string.seventh_button,
                     R.string.eight_button,
                     R.string.ninth_button,
-                    R.string.addition_button
+                    R.string.opening_bracket_button
                 )
                 ButtonRow(
                     R.string.fourth_button,
                     R.string.fifth_button,
                     R.string.sixth_button,
-                    R.string.subtraction_button
+                    R.string.closing_bracket_button
                 )
                 ButtonRow(
                     R.string.first_button,
                     R.string.second_button,
                     R.string.third_button,
-                    R.string.multiplication_button
+                    R.string.modulus_button
                 )
                 ButtonRow(
                     R.string.zeroth_button,
                     R.string.period_button,
-                    R.string.clear_button,
-                    R.string.division_button
+                    R.string.equals_button,
+                    R.string.clear_button
                 )
             }
+            Spacer(modifier = Modifier.weight(1f))
         }
     }
 }
@@ -159,7 +164,7 @@ fun AppButton(
     ) {
         Text(
             text = stringResource(id = text),
-            fontSize = 60.sp
+            fontSize = 60.sp,
         )
     }
 }
@@ -176,16 +181,6 @@ fun CalculatorAppTopBar(modifier: Modifier = Modifier) {
     )
 }
 
-@Composable
-fun CalculatorAppBottomBar(modifier: Modifier = Modifier) {
-    BottomAppBar {
-        Text(
-            text = stringResource(R.string.app_description),
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
-    }
-}
 
 @Preview(
     showBackground = true,
