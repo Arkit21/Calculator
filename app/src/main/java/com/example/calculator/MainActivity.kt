@@ -83,61 +83,61 @@ fun CalculatorApp(modifier: Modifier = Modifier) {
             Surface(
                 modifier = modifier.padding(dimensionResource(id = R.dimen.padding_medium))
             ) {
-                val gradientColors = listOf(Cyan, Magenta, Purple40 /*...*/)
-                TextField(
-                    shape = MaterialTheme.shapes.extraLarge,
-                    value = stringResource(R.string.text_field_value), onValueChange = {},
+                EditTextField(
+                    value = input,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(dimensionResource(id = R.dimen.text_field_height)),
-                    readOnly = true,
-                    singleLine = true,
-                    colors = TextFieldDefaults.colors(
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent
-                    ),
-                    textStyle = TextStyle(
-                        brush = Brush.linearGradient(
-                            colors = gradientColors,
-                        ),
-                        textAlign = TextAlign.Center,
-                        fontSize = 32.sp
-                    )
+                    inputCounter = inputCounter
                 )
             }
             Spacer(modifier = Modifier.weight(3f))
             Column {
-                ButtonRow(
-                    R.string.addition_button,
-                    R.string.subtraction_button,
-                    R.string.multiplication_button,
-                    R.string.division_button
-                )
-                ButtonRow(
-                    R.string.seventh_button,
-                    R.string.eight_button,
-                    R.string.ninth_button,
-                    R.string.opening_bracket_button
-                )
-                ButtonRow(
-                    R.string.fourth_button,
-                    R.string.fifth_button,
-                    R.string.sixth_button,
-                    R.string.closing_bracket_button
-                )
-                ButtonRow(
-                    R.string.first_button,
-                    R.string.second_button,
-                    R.string.third_button,
-                    R.string.modulus_button
-                )
-                ButtonRow(
-                    R.string.zeroth_button,
-                    R.string.period_button,
-                    R.string.equals_button,
-                    R.string.clear_button
-                )
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    AppButton(R.string.addition_button) { input += "+"; inputCounter += 1 }
+                    AppButton(R.string.subtraction_button) { input += "-"; inputCounter += 1 }
+                    AppButton(R.string.multiplication_button) { input += "*"; inputCounter += 1 }
+                    AppButton(R.string.division_button) { input += "/"; inputCounter += 1 }
+                }
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    AppButton(R.string.eight_button) { input += "8"; inputCounter += 1 }
+                    AppButton(R.string.seventh_button) { input += "7"; inputCounter += 1 }
+                    AppButton(R.string.ninth_button) { input += "9"; inputCounter += 1 }
+                    AppButton(R.string.opening_bracket_button) { input += "("; inputCounter += 1 }
+                }
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    AppButton(R.string.fourth_button) { input += "4"; inputCounter += 1 }
+                    AppButton(R.string.fifth_button) { input += "5"; inputCounter += 1 }
+                    AppButton(R.string.sixth_button) { input += "6"; inputCounter += 1 }
+                    AppButton(R.string.closing_bracket_button) { input += ")"; inputCounter += 1 }
+                }
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    AppButton(R.string.first_button) { input += "1"; inputCounter += 1 }
+                    AppButton(R.string.second_button) { input += "2"; inputCounter += 1 }
+                    AppButton(R.string.third_button) { input += "3"; inputCounter += 1 }
+                    AppButton(R.string.modulus_button) { input += "%"; inputCounter += 1 }
+                }
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    AppButton(R.string.zeroth_button) { input += "0"; inputCounter += 1 }
+                    AppButton(R.string.period_button) { input += "-"; inputCounter += 1}
+                    AppButton(R.string.equals_button) {}
+                    AppButton(R.string.clear_button) { input = ""; inputCounter = 0}
+                }
             }
             Spacer(modifier = Modifier.weight(1f))
         }
@@ -145,30 +145,12 @@ fun CalculatorApp(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ButtonRow(
-    @StringRes value1: Int,
-    @StringRes value2: Int,
-    @StringRes value3: Int,
-    @StringRes value4: Int
-) {
-    Row(
-        horizontalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        AppButton(text = value1)
-        AppButton(text = value2)
-        AppButton(text = value3)
-        AppButton(text = value4)
-    }
-
-}
-
-@Composable
 fun AppButton(
-    @StringRes text: Int // Avoided modifier as it would have to be passed repeatedly as an argument during each function invocation
+    @StringRes text: Int, // Avoided modifier as it would have to be passed repeatedly as an argument during each function invocation
+    onClick: () -> Unit
 ) {
     Button(
-        onClick = { /*TODO*/ },
+        onClick = onClick,
         modifier = Modifier
             .padding(dimensionResource(id = R.dimen.padding_small))
             .size(dimensionResource(id = R.dimen.button_size))
@@ -178,6 +160,36 @@ fun AppButton(
             fontSize = 60.sp,
         )
     }
+}
+
+@Composable
+fun EditTextField(
+    value: String,
+    inputCounter: Int,
+    modifier: Modifier = Modifier
+) {
+    val gradientColors = listOf(Cyan, Magenta, Purple40 /*...*/)
+    TextField(
+        shape = MaterialTheme.shapes.extraLarge,
+        value = if (inputCounter == 0)
+            stringResource(id = R.string.text_field_value) else
+            value, onValueChange = {},
+        modifier = modifier,
+        readOnly = true,
+        singleLine = true,
+        colors = TextFieldDefaults.colors(
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
+        ),
+        textStyle = TextStyle(
+            brush = Brush.linearGradient(
+                colors = gradientColors,
+            ),
+            textAlign = TextAlign.Center,
+            fontSize = 32.sp
+        )
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
