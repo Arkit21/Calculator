@@ -25,6 +25,11 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -62,6 +67,12 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun CalculatorApp(modifier: Modifier = Modifier) {
+    var inputCounter by remember {
+        mutableIntStateOf(0)
+    }
+    var input by remember {
+        mutableStateOf("")
+    }
     Surface(
         modifier = Modifier
             .padding(dimensionResource(id = R.dimen.padding_medium))
