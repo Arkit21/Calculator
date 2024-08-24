@@ -41,6 +41,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.example.calculator.model.operandsList
 import com.example.calculator.ui.theme.CalculatorTheme
 import com.example.calculator.ui.theme.Purple40
 
@@ -97,46 +98,82 @@ fun CalculatorApp(modifier: Modifier = Modifier) {
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    AppButton(R.string.addition_button) { input += "+"; inputCounter += 1 }
-                    AppButton(R.string.subtraction_button) { input += "-"; inputCounter += 1 }
-                    AppButton(R.string.multiplication_button) { input += "*"; inputCounter += 1 }
-                    AppButton(R.string.division_button) { input += "/"; inputCounter += 1 }
+                    AppButton(R.string.addition_button) {
+                        input = calculate(input, '+'); inputCounter += 1
+                    }
+                    AppButton(R.string.subtraction_button) {
+                        input = calculate(input, '-'); inputCounter += 1
+                    }
+                    AppButton(R.string.multiplication_button) {
+                        input = calculate(input, '*'); inputCounter += 1
+                    }
+                    AppButton(R.string.division_button) {
+                        input = calculate(input, '/'); inputCounter += 1
+                    }
                 }
                 Row(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    AppButton(R.string.eight_button) { input += "8"; inputCounter += 1 }
-                    AppButton(R.string.seventh_button) { input += "7"; inputCounter += 1 }
-                    AppButton(R.string.ninth_button) { input += "9"; inputCounter += 1 }
-                    AppButton(R.string.opening_bracket_button) { input += "("; inputCounter += 1 }
+                    AppButton(R.string.eight_button) {
+                        input = calculate(input, '8'); inputCounter += 1
+                    }
+                    AppButton(R.string.seventh_button) {
+                        input = calculate(input, '7'); inputCounter += 1
+                    }
+                    AppButton(R.string.ninth_button) {
+                        input = calculate(input, '9'); inputCounter += 1
+                    }
+                    AppButton(R.string.opening_bracket_button) {
+                        input = calculate(input, '('); inputCounter += 1
+                    }
                 }
                 Row(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    AppButton(R.string.fourth_button) { input += "4"; inputCounter += 1 }
-                    AppButton(R.string.fifth_button) { input += "5"; inputCounter += 1 }
-                    AppButton(R.string.sixth_button) { input += "6"; inputCounter += 1 }
-                    AppButton(R.string.closing_bracket_button) { input += ")"; inputCounter += 1 }
+                    AppButton(R.string.fourth_button) {
+                        input = calculate(input, '4'); inputCounter += 1
+                    }
+                    AppButton(R.string.fifth_button) {
+                        input = calculate(input, '5'); inputCounter += 1
+                    }
+                    AppButton(R.string.sixth_button) {
+                        input = calculate(input, '6'); inputCounter += 1
+                    }
+                    AppButton(R.string.closing_bracket_button) {
+                        input = calculate(input, ')'); inputCounter += 1
+                    }
                 }
                 Row(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    AppButton(R.string.first_button) { input += "1"; inputCounter += 1 }
-                    AppButton(R.string.second_button) { input += "2"; inputCounter += 1 }
-                    AppButton(R.string.third_button) { input += "3"; inputCounter += 1 }
-                    AppButton(R.string.modulus_button) { input += "%"; inputCounter += 1 }
+                    AppButton(R.string.first_button) {
+                        input = calculate(input, '1'); inputCounter += 1
+                    }
+                    AppButton(R.string.second_button) {
+                        input = calculate(input, '2'); inputCounter += 1
+                    }
+                    AppButton(R.string.third_button) {
+                        input = calculate(input, '3'); inputCounter += 1
+                    }
+                    AppButton(R.string.modulus_button) {
+                        input = calculate(input, '%'); inputCounter += 1
+                    }
                 }
                 Row(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    AppButton(R.string.zeroth_button) { input += "0"; inputCounter += 1 }
-                    AppButton(R.string.period_button) { input += "-"; inputCounter += 1}
+                    AppButton(R.string.zeroth_button) {
+                        input = calculate(input, '0'); inputCounter += 1
+                    }
+                    AppButton(R.string.period_button) {
+                        input = calculate(input, '.'); inputCounter += 1
+                    }
                     AppButton(R.string.equals_button) {}
-                    AppButton(R.string.clear_button) { input = ""; inputCounter = 0}
+                    AppButton(R.string.clear_button) { input = ""; inputCounter = 0 }
                 }
             }
             Spacer(modifier = Modifier.weight(1f))
@@ -202,6 +239,24 @@ fun CalculatorAppTopBar(modifier: Modifier = Modifier) {
             titleContentColor = MaterialTheme.colorScheme.primary,
         )
     )
+}
+
+fun calculate(
+    input: String,
+    char: Char
+): String {
+    var value = safetyCheck(input, char)
+    return value
+}
+
+fun safetyCheck(input: String, char: Char): String {
+    val openingBracketCount = input.count { it == '(' } - input.count { it == ')' }
+    var returnValue = ""
+    returnValue = if (char in operandsList && input.last() in operandsList)
+        input.dropLast(1) + char
+    else
+        input + char
+    return returnValue
 }
 
 
