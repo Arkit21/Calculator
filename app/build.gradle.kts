@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+
     namespace = "com.example.calculator"
     compileSdk = 34
 
@@ -49,8 +50,9 @@ android {
     }
 }
 
-dependencies {
 
+dependencies {
+    implementation(libs.fookcalc)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

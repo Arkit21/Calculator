@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import com.example.calculator.model.operandsList
 import com.example.calculator.ui.theme.CalculatorTheme
 import com.example.calculator.ui.theme.Purple40
+import com.gloorystudio.fook.calc.Fook
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,16 +100,16 @@ fun CalculatorApp(modifier: Modifier = Modifier) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     AppButton(R.string.addition_button) {
-                        input = calculate(input, '+'); inputCounter += 1
+                        input += '+'; inputCounter += 1
                     }
                     AppButton(R.string.subtraction_button) {
-                        input = calculate(input, '-'); inputCounter += 1
+                        input += '-'; inputCounter += 1
                     }
                     AppButton(R.string.multiplication_button) {
-                        input = calculate(input, '*'); inputCounter += 1
+                        input += '*'; inputCounter += 1
                     }
                     AppButton(R.string.division_button) {
-                        input = calculate(input, '/'); inputCounter += 1
+                        input += '/'; inputCounter += 1
                     }
                 }
                 Row(
@@ -116,16 +117,16 @@ fun CalculatorApp(modifier: Modifier = Modifier) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     AppButton(R.string.eight_button) {
-                        input = calculate(input, '8'); inputCounter += 1
+                        input += '8'; inputCounter += 1
                     }
                     AppButton(R.string.seventh_button) {
-                        input = calculate(input, '7'); inputCounter += 1
+                        input += '7'; inputCounter += 1
                     }
                     AppButton(R.string.ninth_button) {
-                        input = calculate(input, '9'); inputCounter += 1
+                        input += '9'; inputCounter += 1
                     }
                     AppButton(R.string.opening_bracket_button) {
-                        input = calculate(input, '('); inputCounter += 1
+                        input += '('; inputCounter += 1
                     }
                 }
                 Row(
@@ -133,16 +134,16 @@ fun CalculatorApp(modifier: Modifier = Modifier) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     AppButton(R.string.fourth_button) {
-                        input = calculate(input, '4'); inputCounter += 1
+                        input += '4'; inputCounter += 1
                     }
                     AppButton(R.string.fifth_button) {
-                        input = calculate(input, '5'); inputCounter += 1
+                        input += '5'; inputCounter += 1
                     }
                     AppButton(R.string.sixth_button) {
-                        input = calculate(input, '6'); inputCounter += 1
+                        input += '6'; inputCounter += 1
                     }
                     AppButton(R.string.closing_bracket_button) {
-                        input = calculate(input, ')'); inputCounter += 1
+                        input += ')'; inputCounter += 1
                     }
                 }
                 Row(
@@ -150,16 +151,16 @@ fun CalculatorApp(modifier: Modifier = Modifier) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     AppButton(R.string.first_button) {
-                        input = calculate(input, '1'); inputCounter += 1
+                        input += '1'; inputCounter += 1
                     }
                     AppButton(R.string.second_button) {
-                        input = calculate(input, '2'); inputCounter += 1
+                        input += '2'; inputCounter += 1
                     }
                     AppButton(R.string.third_button) {
-                        input = calculate(input, '3'); inputCounter += 1
+                        input += '3'; inputCounter += 1
                     }
                     AppButton(R.string.modulus_button) {
-                        input = calculate(input, '%'); inputCounter += 1
+                        input += '%'; inputCounter += 1
                     }
                 }
                 Row(
@@ -167,12 +168,14 @@ fun CalculatorApp(modifier: Modifier = Modifier) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     AppButton(R.string.zeroth_button) {
-                        input = calculate(input, '0'); inputCounter += 1
+                        input += '0'; inputCounter += 1
                     }
                     AppButton(R.string.period_button) {
-                        input = calculate(input, '.'); inputCounter += 1
+                        input += '.'; inputCounter += 1
                     }
-                    AppButton(R.string.equals_button) {}
+                    AppButton(R.string.equals_button) {
+                        input = calculate(input)
+                    }
                     AppButton(R.string.clear_button) { input = ""; inputCounter = 0 }
                 }
             }
@@ -242,15 +245,13 @@ fun CalculatorAppTopBar(modifier: Modifier = Modifier) {
 }
 
 fun calculate(
-    input: String,
-    char: Char
+    input: String
 ): String {
-    var value = safetyCheck(input, char)
-    return value
+//    var value = safetyCheck(input, char)
+    return Fook.calc(input).toString()
 }
 
 fun safetyCheck(input: String, char: Char): String {
-    val openingBracketCount = input.count { it == '(' } - input.count { it == ')' }
     var returnValue = ""
     returnValue = if (char in operandsList && input.last() in operandsList)
         input.dropLast(1) + char
