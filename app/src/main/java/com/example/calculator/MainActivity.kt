@@ -126,7 +126,7 @@ fun CalculatorApp(modifier: Modifier = Modifier) {
                         input += '9'; inputCounter += 1
                     }
                     AppButton(R.string.opening_bracket_button) {
-                        input += '('; inputCounter += 1
+//                        input += '('; inputCounter += 1
                     }
                 }
                 Row(
@@ -143,7 +143,7 @@ fun CalculatorApp(modifier: Modifier = Modifier) {
                         input += '6'; inputCounter += 1
                     }
                     AppButton(R.string.closing_bracket_button) {
-                        input += ')'; inputCounter += 1
+//                        input += ')'; inputCounter += 1
                     }
                 }
                 Row(
@@ -174,7 +174,7 @@ fun CalculatorApp(modifier: Modifier = Modifier) {
                         input += '.'; inputCounter += 1
                     }
                     AppButton(R.string.equals_button) {
-                        input = calculate(input)
+                        input = calculate(input); inputCounter = -1
                     }
                     AppButton(R.string.clear_button) { input = ""; inputCounter = 0 }
                 }
@@ -208,12 +208,15 @@ fun EditTextField(
     inputCounter: Int,
     modifier: Modifier = Modifier
 ) {
+    var display = value
     val gradientColors = listOf(Cyan, Magenta, Purple40 /*...*/)
+    if (inputCounter == 0)
+        display = ""
     TextField(
         shape = MaterialTheme.shapes.extraLarge,
         value = if (inputCounter == 0)
             stringResource(id = R.string.text_field_value) else
-            value, onValueChange = {},
+            display, onValueChange = {},
         modifier = modifier,
         readOnly = true,
         singleLine = true,
